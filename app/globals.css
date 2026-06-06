@@ -1,26 +1,71 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   Tema — dark cinematográfico con acento dorado (aspiración).
+   App dark-first (estilo TikTok/Netflix), no sigue el modo del
+   sistema: la experiencia de video se mantiene consistente.
+   ============================================================ */
+@theme {
+  --color-background: #0b0a0c;
+  --color-surface: #161419;
+  --color-surface-2: #211d27;
+  --color-foreground: #f7f6f4;
+  --color-muted: #9c99a6;
+  --color-faint: #6c6976;
+  --color-border: #2a2730;
+  --color-gold: #f4b740;
+  --color-gold-deep: #d9971f;
+  --color-danger: #ef5350;
+
+  --font-display: var(--font-bricolage), ui-sans-serif, sans-serif;
+  --font-body: var(--font-manrope), ui-sans-serif, sans-serif;
+
+  --radius-card: 1.25rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Atmósfera: un halo dorado tenue arriba sobre el fondo oscuro. */
+  background-color: var(--color-background);
+  background-image: radial-gradient(
+    120% 80% at 50% -10%,
+    rgba(244, 183, 64, 0.12),
+    rgba(244, 183, 64, 0) 60%
+  );
+  background-attachment: fixed;
+}
+
+/* Scrollbars discretas en escritorio. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+/* ============================================================
+   Animaciones de entrada (revelado escalonado en la carga).
+   ============================================================ */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  animation: reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    animation: none;
+    opacity: 1;
+  }
 }

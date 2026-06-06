@@ -32,9 +32,18 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.local.example
+
+# serwist (service worker generado)
+public/sw.js
+public/sw.js.map
+public/swe-worker-*.js
 
 # vercel
 .vercel
+
+# playwright (artefactos de verificación visual)
+.playwright-mcp/
 
 # typescript
 *.tsbuildinfo
