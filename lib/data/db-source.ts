@@ -85,10 +85,16 @@ export async function getFeedClipsDb(): Promise<FeedClip[]> {
   const seriesIds = [...new Set(clips.map((c) => c.series_id))];
   const { data: seriesRows } = await supabase
     .from("series")
-    .select("id, slug, title, is_published")
+    .select("id, slug, title, is_published, section_id")
     .in("id", seriesIds);
 
   const seriesById = new Map((seriesRows ?? []).map((s) => [s.id, s]));
+
+  const sectionIds = [...new Set((seriesRows ?? []).map((s) => s.section_id))];
+  const { data: sectionRows } = sectionIds.length
+    ? await supabase.from("sections").select("id, title").in("id", sectionIds)
+    : { data: [] };
+  const sectionById = new Map((sectionRows ?? []).map((s) => [s.id, s.title]));
 
   return clips.flatMap((clip) => {
     const series = seriesById.get(clip.series_id);
@@ -99,6 +105,7 @@ export async function getFeedClipsDb(): Promise<FeedClip[]> {
         seriesId: clip.series_id,
         seriesSlug: series.slug,
         seriesTitle: series.title,
+        sectionTitle: sectionById.get(series.section_id) ?? "",
         playbackId: clip.mux_playback_id,
         videoUrl: clip.video_url,
         posterUrl: clip.poster_url,

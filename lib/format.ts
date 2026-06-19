@@ -15,6 +15,26 @@ export function formatTimecode(seconds: number): string {
   return `${m}:${s.toString().padStart(2, "0")}`;
 }
 
+/** Abrevia números grandes: 86 -> "86", 1200 -> "1.2K", 1500000 -> "1.5M". */
+export function formatCount(n: number): string {
+  if (n < 1000) return String(n);
+  if (n < 1_000_000) {
+    const k = n / 1000;
+    return `${k % 1 === 0 ? k : k.toFixed(1)}K`;
+  }
+  const m = n / 1_000_000;
+  return `${m % 1 === 0 ? m : m.toFixed(1)}M`;
+}
+
+/** Formatea centavos a precio: 800 -> "$8", 1750 -> "$17.50". */
+export function formatPrice(cents: number, currency = "usd"): string {
+  const amount = cents / 100;
+  const value = Number.isInteger(amount) ? String(amount) : amount.toFixed(2);
+  return currency.toLowerCase() === "usd"
+    ? `$${value}`
+    : `${value} ${currency.toUpperCase()}`;
+}
+
 /** Convierte un texto en slug URL: "Tu Crédito" -> "tu-credito". */
 export function slugify(input: string): string {
   return input

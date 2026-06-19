@@ -18,6 +18,11 @@ export function isSupabaseConfigured(): boolean {
   return Boolean(publicEnv.supabaseUrl && publicEnv.supabaseAnonKey);
 }
 
+/** ¿Está configurado Stripe para cobrar? (solo servidor) */
+export function isStripeConfigured(): boolean {
+  return Boolean(process.env.STRIPE_SECRET_KEY);
+}
+
 /** ¿Está configurado Mux para firmar reproducciones? (solo servidor) */
 export function isMuxConfigured(): boolean {
   return Boolean(

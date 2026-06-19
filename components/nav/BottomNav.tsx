@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Flame, Library, User } from "lucide-react";
+import { Flame, Library, Scale, User } from "lucide-react";
 import { ROUTES } from "@/lib/constants";
 
 const ITEMS = [
   { href: ROUTES.feed, label: "Feed", icon: Flame },
   { href: ROUTES.catalog, label: "Catálogo", icon: Library },
+  { href: ROUTES.servicios, label: "Servicios", icon: Scale },
   { href: ROUTES.login, label: "Cuenta", icon: User },
 ] as const;
 

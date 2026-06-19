@@ -11,6 +11,13 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 type Mode = "signup" | "login";
 
+/** A dónde ir tras iniciar sesión: respeta ?next= si es una ruta interna. */
+function destinationAfterAuth(): string {
+  if (typeof window === "undefined") return ROUTES.feed;
+  const next = new URLSearchParams(window.location.search).get("next");
+  return next && next.startsWith("/") ? next : ROUTES.feed;
+}
+
 const inputClass =
   "w-full rounded-2xl border-2 border-border bg-surface px-5 py-4 text-lg outline-none transition-colors focus:border-gold";
 const buttonClass =
@@ -103,7 +110,7 @@ export function LoginForm() {
       return;
     }
 
-    window.location.href = ROUTES.feed;
+    window.location.href = destinationAfterAuth();
   }
 
   const isSignup = mode === "signup";

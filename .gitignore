@@ -42,6 +42,13 @@ public/swe-worker-*.js
 # vercel
 .vercel
 
+# videos fuente (pesados; se suben a Supabase Storage, no a git)
+/Videos/
+/Videos 2/
+/Vides/
+*.mp4
+scripts/_*.mjs
+
 # playwright (artefactos de verificación visual)
 .playwright-mcp/
 

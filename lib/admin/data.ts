@@ -90,6 +90,7 @@ export async function adminListClips(): Promise<AdminClip[]> {
     seriesId: c.series_id,
     seriesSlug: seriesById.get(c.series_id)?.slug ?? "",
     seriesTitle: seriesById.get(c.series_id)?.title ?? "—",
+    sectionTitle: "",
     playbackId: c.mux_playback_id,
     videoUrl: c.video_url,
     posterUrl: c.poster_url,

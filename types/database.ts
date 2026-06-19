@@ -18,6 +18,48 @@ export type Database = {
   };
   public: {
     Tables: {
+      case_studies: {
+        Row: {
+          created_at: string;
+          id: string;
+          is_published: boolean;
+          outcome: string | null;
+          position: number;
+          poster_url: string | null;
+          slug: string;
+          sources: Json;
+          summary: string | null;
+          title: string;
+          video_url: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          is_published?: boolean;
+          outcome?: string | null;
+          position?: number;
+          poster_url?: string | null;
+          slug: string;
+          sources?: Json;
+          summary?: string | null;
+          title: string;
+          video_url?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          is_published?: boolean;
+          outcome?: string | null;
+          position?: number;
+          poster_url?: string | null;
+          slug?: string;
+          sources?: Json;
+          summary?: string | null;
+          title?: string;
+          video_url?: string | null;
+        };
+        Relationships: [];
+      };
       entitlements: {
         Row: {
           expires_at: string | null;
@@ -174,6 +216,124 @@ export type Database = {
           },
         ];
       };
+      feed_comments: {
+        Row: {
+          author_name: string;
+          body: string;
+          clip_id: string;
+          created_at: string;
+          id: string;
+          user_id: string;
+        };
+        Insert: {
+          author_name?: string;
+          body: string;
+          clip_id: string;
+          created_at?: string;
+          id?: string;
+          user_id: string;
+        };
+        Update: {
+          author_name?: string;
+          body?: string;
+          clip_id?: string;
+          created_at?: string;
+          id?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "feed_comments_clip_id_fkey";
+            columns: ["clip_id"];
+            isOneToOne: false;
+            referencedRelation: "feed_clips";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      feed_likes: {
+        Row: { clip_id: string; created_at: string; user_id: string };
+        Insert: { clip_id: string; created_at?: string; user_id: string };
+        Update: { clip_id?: string; created_at?: string; user_id?: string };
+        Relationships: [
+          {
+            foreignKeyName: "feed_likes_clip_id_fkey";
+            columns: ["clip_id"];
+            isOneToOne: false;
+            referencedRelation: "feed_clips";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      product_series: {
+        Row: {
+          product_id: string;
+          series_id: string;
+        };
+        Insert: {
+          product_id: string;
+          series_id: string;
+        };
+        Update: {
+          product_id?: string;
+          series_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "product_series_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "product_series_series_id_fkey";
+            columns: ["series_id"];
+            isOneToOne: false;
+            referencedRelation: "series";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      products: {
+        Row: {
+          created_at: string;
+          currency: string;
+          description: string | null;
+          id: string;
+          is_active: boolean;
+          kind: string;
+          position: number;
+          price_cents: number;
+          slug: string;
+          title: string;
+        };
+        Insert: {
+          created_at?: string;
+          currency?: string;
+          description?: string | null;
+          id?: string;
+          is_active?: boolean;
+          kind?: string;
+          position?: number;
+          price_cents: number;
+          slug: string;
+          title: string;
+        };
+        Update: {
+          created_at?: string;
+          currency?: string;
+          description?: string | null;
+          id?: string;
+          is_active?: boolean;
+          kind?: string;
+          position?: number;
+          price_cents?: number;
+          slug?: string;
+          title?: string;
+        };
+        Relationships: [];
+      };
       profiles: {
         Row: {
           avatar_url: string | null;
@@ -194,6 +354,50 @@ export type Database = {
           id?: string;
         };
         Relationships: [];
+      };
+      purchases: {
+        Row: {
+          amount_cents: number | null;
+          created_at: string;
+          currency: string | null;
+          id: string;
+          product_id: string;
+          status: string;
+          stripe_payment_intent: string | null;
+          stripe_session_id: string | null;
+          user_id: string;
+        };
+        Insert: {
+          amount_cents?: number | null;
+          created_at?: string;
+          currency?: string | null;
+          id?: string;
+          product_id: string;
+          status?: string;
+          stripe_payment_intent?: string | null;
+          stripe_session_id?: string | null;
+          user_id: string;
+        };
+        Update: {
+          amount_cents?: number | null;
+          created_at?: string;
+          currency?: string | null;
+          id?: string;
+          product_id?: string;
+          status?: string;
+          stripe_payment_intent?: string | null;
+          stripe_session_id?: string | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "purchases_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       sections: {
         Row: {
@@ -227,6 +431,8 @@ export type Database = {
       };
       series: {
         Row: {
+          access_type: string;
+          coming_soon: boolean;
           cover_url: string | null;
           created_at: string;
           description: string | null;
@@ -239,6 +445,8 @@ export type Database = {
           title: string;
         };
         Insert: {
+          access_type?: string;
+          coming_soon?: boolean;
           cover_url?: string | null;
           created_at?: string;
           description?: string | null;
@@ -251,6 +459,8 @@ export type Database = {
           title: string;
         };
         Update: {
+          access_type?: string;
+          coming_soon?: boolean;
           cover_url?: string | null;
           created_at?: string;
           description?: string | null;

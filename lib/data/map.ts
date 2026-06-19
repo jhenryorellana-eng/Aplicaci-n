@@ -1,5 +1,10 @@
 /** Mapea filas de la base de datos a los modelos de dominio. */
-import type { EpisodeStatus, SectionKind, Tier } from "@/lib/constants";
+import type {
+  AccessType,
+  EpisodeStatus,
+  SectionKind,
+  Tier,
+} from "@/lib/constants";
 import { muxThumbnailUrl } from "@/lib/mux/playback";
 import type { Database } from "@/types/database";
 import type { Episode, Section, Series } from "@/types/domain";
@@ -29,6 +34,8 @@ export function mapSeries(r: SeriesRow): Series {
     coverUrl: r.cover_url,
     position: r.position,
     requiredTier: r.required_tier as Tier,
+    accessType: r.access_type as AccessType,
+    comingSoon: r.coming_soon,
     isPublished: r.is_published,
   };
 }

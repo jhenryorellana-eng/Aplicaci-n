@@ -2,8 +2,12 @@
 
 import Link from "next/link";
 import { ChevronRight, ChevronUp, Pause, Volume2, VolumeX } from "lucide-react";
+import { CommentButton } from "@/components/feed/CommentButton";
+import { LikeButton } from "@/components/feed/LikeButton";
+import { SaveButton } from "@/components/feed/SaveButton";
+import { ShareButton } from "@/components/feed/ShareButton";
 import { HlsVideo } from "@/components/player/HlsVideo";
-import { FEED, ROUTES } from "@/lib/constants";
+import { APP_NAME, FEED, ROUTES } from "@/lib/constants";
 import { muxPublicHlsUrl } from "@/lib/mux/playback";
 import { useFeedStore } from "@/lib/stores/feedStore";
 import type { FeedClip } from "@/types/domain";
@@ -14,6 +18,11 @@ type Props = {
   active: boolean;
   /** Si está dentro de la ventana de precarga, se carga el video. */
   inWindow: boolean;
+  likeCount: number;
+  initialLiked: boolean;
+  commentCount: number;
+  initialSaved: boolean;
+  isLoggedIn: boolean;
 };
 
 function resolveSrc(clip: FeedClip): string | null {
@@ -23,7 +32,17 @@ function resolveSrc(clip: FeedClip): string | null {
   return null;
 }
 
-export function FeedSlide({ clip, index, active, inWindow }: Props) {
+export function FeedSlide({
+  clip,
+  index,
+  active,
+  inWindow,
+  likeCount,
+  initialLiked,
+  commentCount,
+  initialSaved,
+  isLoggedIn,
+}: Props) {
   const muted = useFeedStore((s) => s.muted);
   const toggleMuted = useFeedStore((s) => s.toggleMuted);
 
@@ -45,12 +64,35 @@ export function FeedSlide({ clip, index, active, inWindow }: Props) {
         className="absolute inset-0 size-full object-cover"
       />
 
+      {/* Marca + categoría (arriba-izquierda) */}
+      <div
+        className="absolute left-4 z-20 flex flex-col items-start gap-2"
+        style={{ top: "calc(env(safe-area-inset-top) + 1rem)" }}
+      >
+        <div className="flex items-center gap-2 rounded-full bg-black/35 py-1 pl-1 pr-3 backdrop-blur">
+          <span className="grid size-7 place-items-center rounded-full bg-navy">
+            <svg viewBox="0 0 40 40" className="size-4" aria-hidden>
+              <rect x="4" y="22" width="9" height="14" rx="2.5" fill="#e9ae4e" />
+              <rect x="15.5" y="13" width="9" height="23" rx="2.5" fill="#f2bc5a" />
+              <rect x="27" y="5" width="9" height="31" rx="2.5" fill="#ffd98a" />
+            </svg>
+          </span>
+          <span className="text-sm font-bold text-white">{APP_NAME}</span>
+        </div>
+        {clip.sectionTitle && (
+          <span className="rounded-full bg-gold/90 px-2.5 py-0.5 text-[0.62rem] font-bold uppercase tracking-wide text-background">
+            {clip.sectionTitle}
+          </span>
+        )}
+      </div>
+
       {/* Botón de silencio */}
       <button
         type="button"
         onClick={toggleMuted}
         aria-label={muted ? "Activar sonido" : "Silenciar"}
-        className="absolute right-4 top-[calc(env(safe-area-inset-top)+1rem)] z-10 grid size-11 place-items-center rounded-full bg-black/40 backdrop-blur transition-colors hover:bg-black/60"
+        className="absolute right-4 z-20 grid size-11 place-items-center rounded-full bg-black/40 backdrop-blur transition-colors hover:bg-black/60"
+        style={{ top: "calc(env(safe-area-inset-top) + 1rem)" }}
       >
         {muted ? (
           <VolumeX className="size-5" aria-hidden />
@@ -67,6 +109,30 @@ export function FeedSlide({ clip, index, active, inWindow }: Props) {
         </div>
       )}
 
+      {/* Barra de acciones (me gusta · comentarios · guardar · compartir) */}
+      <div className="absolute bottom-44 right-3 z-20 flex flex-col items-center gap-4">
+        <LikeButton
+          clipId={clip.id}
+          initialLiked={initialLiked}
+          initialCount={likeCount}
+          isLoggedIn={isLoggedIn}
+        />
+        <CommentButton
+          clipId={clip.id}
+          count={commentCount}
+          isLoggedIn={isLoggedIn}
+        />
+        <SaveButton
+          seriesId={clip.seriesId}
+          initialSaved={initialSaved}
+          isLoggedIn={isLoggedIn}
+        />
+        <ShareButton
+          title={clip.seriesTitle}
+          path={ROUTES.series(clip.seriesSlug)}
+        />
+      </div>
+
       {/* Pista de scroll en el primer slide */}
       {index === 0 && active && (
         <div className="pointer-events-none absolute inset-x-0 bottom-48 z-10 flex flex-col items-center gap-1 text-white/75">
@@ -76,9 +142,9 @@ export function FeedSlide({ clip, index, active, inWindow }: Props) {
       )}
 
       {/* Información + CTA a la serie */}
-      <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-5 pb-28 pt-20">
+      <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/90 via-black/45 to-transparent px-5 pb-28 pt-20">
         {clip.caption && (
-          <p className="mb-3 max-w-[34ch] text-base font-semibold leading-snug text-white">
+          <p className="mb-3 max-w-[30ch] text-base font-semibold leading-snug text-white">
             {clip.caption}
           </p>
         )}

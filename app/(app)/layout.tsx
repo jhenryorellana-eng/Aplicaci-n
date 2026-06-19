@@ -1,4 +1,5 @@
 import { BottomNav } from "@/components/nav/BottomNav";
+import { Toaster } from "@/components/ui/Toaster";
 
 export default function AppLayout({
   children,
@@ -7,6 +8,7 @@ export default function AppLayout({
     <div className="min-h-[100dvh]">
       {children}
       <BottomNav />
+      <Toaster />
     </div>
   );
 }

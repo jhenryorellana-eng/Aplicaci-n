@@ -3,10 +3,9 @@
  * "mágicos" para no repetirlos por el código.
  */
 
-// Nombre placeholder — pendiente de definir la marca con el cliente.
-export const APP_NAME = "Ruta USA";
+export const APP_NAME = "USA Latino Prime";
 export const APP_DESCRIPTION =
-  "El camino al éxito en Estados Unidos, paso a paso y en video.";
+  "Tu guía en video para hacer las cosas bien en Estados Unidos, paso a paso.";
 
 export const ROUTES = {
   home: "/",
@@ -15,10 +14,14 @@ export const ROUTES = {
   catalog: "/catalog",
   series: (slug: string) => `/series/${slug}`,
   watch: (episodeId: string) => `/watch/${episodeId}`,
+  servicios: "/servicios",
+  casos: "/casos",
   admin: "/admin",
   api: {
     playbackSign: "/api/playback/sign",
     muxWebhook: "/api/mux/webhook",
+    checkout: "/api/checkout",
+    stripeWebhook: "/api/stripe/webhook",
   },
 } as const;
 
@@ -39,6 +42,13 @@ export const SECTION_KIND = {
   topic: "topic",
 } as const;
 export type SectionKind = (typeof SECTION_KIND)[keyof typeof SECTION_KIND];
+
+export const ACCESS_TYPE = {
+  free: "free",
+  subscription: "subscription",
+  purchase: "purchase",
+} as const;
+export type AccessType = (typeof ACCESS_TYPE)[keyof typeof ACCESS_TYPE];
 
 export const EPISODE_STATUS = {
   processing: "processing",

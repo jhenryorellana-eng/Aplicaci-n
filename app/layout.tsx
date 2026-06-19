@@ -1,18 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Manrope } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { APP_DESCRIPTION, APP_NAME } from "@/lib/constants";
 import { publicEnv } from "@/lib/env";
 
-const display = Bricolage_Grotesque({
+// Plus Jakarta Sans: la fuente que USA Latino Prime eligió por su parecido a
+// SF Pro de Apple. Limpia, geométrica, premium. Una sola familia para todo.
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-bricolage",
-  display: "swap",
-});
-
-const body = Manrope({
-  subsets: ["latin"],
-  variable: "--font-manrope",
+  variable: "--font-jakarta",
   display: "swap",
 });
 
@@ -39,7 +35,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b0a0c",
+  themeColor: "#060d1c",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -49,7 +45,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es" className={`${display.variable} ${body.variable}`}>
+    <html lang="es" className={jakarta.variable}>
       <body className="min-h-[100dvh] bg-background font-body text-foreground antialiased">
         {children}
       </body>

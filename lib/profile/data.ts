@@ -133,3 +133,40 @@ export async function getProfileData(): Promise<ProfileData> {
     favorites,
   };
 }
+
+/** Progreso del usuario en la Ruta del Éxito (lecciones completadas / total). */
+export async function getGuidedProgress(): Promise<{
+  done: number;
+  total: number;
+}> {
+  const supabase = await createSupabaseServerClient();
+  const { data: section } = await supabase
+    .from("sections")
+    .select("id")
+    .eq("kind", SECTION_KIND.guidedPath)
+    .maybeSingle();
+  if (!section) return { done: 0, total: 0 };
+
+  const { data: gSeries } = await supabase
+    .from("series")
+    .select("id")
+    .eq("section_id", section.id)
+    .eq("is_published", true);
+  const seriesIds = (gSeries ?? []).map((s) => s.id);
+  if (seriesIds.length === 0) return { done: 0, total: 0 };
+
+  const { data: eps } = await supabase
+    .from("episodes")
+    .select("id")
+    .in("series_id", seriesIds)
+    .eq("is_published", true);
+  const epIds = new Set((eps ?? []).map((e) => e.id));
+
+  const { data: progress } = await supabase
+    .from("watch_progress")
+    .select("episode_id, completed")
+    .eq("completed", true);
+  const done = (progress ?? []).filter((p) => epIds.has(p.episode_id)).length;
+
+  return { done, total: epIds.size };
+}

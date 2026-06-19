@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Heart } from "lucide-react";
 import { ROUTES } from "@/lib/constants";
+import { toast } from "@/lib/stores/toastStore";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 type Props = {
@@ -21,10 +22,14 @@ export function FavoriteButton({
 
   async function toggle() {
     if (!isLoggedIn) {
-      window.location.href = ROUTES.login;
+      window.location.href = `${ROUTES.login}?next=${encodeURIComponent(window.location.pathname)}`;
       return;
     }
+
+    const next = !favorited;
+    setFavorited(next); // optimista: respuesta instantánea
     setBusy(true);
+
     const supabase = createSupabaseBrowserClient();
     const {
       data: { user },
@@ -34,20 +39,23 @@ export function FavoriteButton({
       return;
     }
 
-    if (favorited) {
-      await supabase
-        .from("favorites")
-        .delete()
-        .eq("series_id", seriesId)
-        .eq("user_id", user.id);
-      setFavorited(false);
-    } else {
-      await supabase
-        .from("favorites")
-        .insert({ series_id: seriesId, user_id: user.id });
-      setFavorited(true);
-    }
+    const { error } = next
+      ? await supabase
+          .from("favorites")
+          .insert({ series_id: seriesId, user_id: user.id })
+      : await supabase
+          .from("favorites")
+          .delete()
+          .eq("series_id", seriesId)
+          .eq("user_id", user.id);
+
     setBusy(false);
+    if (error) {
+      setFavorited(!next); // revertir
+      toast.error("No se pudo guardar. Inténtalo de nuevo.");
+      return;
+    }
+    toast.success(next ? "Guardado en Mis favoritos" : "Quitado de favoritos");
   }
 
   return (

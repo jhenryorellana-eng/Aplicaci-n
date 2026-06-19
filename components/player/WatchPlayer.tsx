@@ -7,11 +7,20 @@ import type { Episode } from "@/types/domain";
 
 /**
  * Reproductor de la pantalla de ver.
- * - Modo demo: usa la URL HLS pública directa.
- * - Modo real: pide al servidor una URL firmada (Mux) verificando acceso.
+ * - Contenido directo (demo / Storage público): reproduce la URL directa.
+ * - Contenido protegido (de pago) o Mux: pide al servidor una URL firmada,
+ *   que solo entrega tras verificar el acceso.
  */
-export function WatchPlayer({ episode }: { episode: Episode }) {
-  const directUrl = episode.demoPlaybackUrl ?? episode.videoUrl ?? null;
+export function WatchPlayer({
+  episode,
+  isProtected = false,
+}: {
+  episode: Episode;
+  isProtected?: boolean;
+}) {
+  const directUrl = isProtected
+    ? null
+    : (episode.demoPlaybackUrl ?? episode.videoUrl ?? null);
   const [src, setSrc] = useState<string | null>(directUrl);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,21 +29,19 @@ export function WatchPlayer({ episode }: { episode: Episode }) {
       setSrc(directUrl);
       return;
     }
-    if (!episode.playbackId) {
-      setError("Este video aún no está disponible.");
-      return;
-    }
 
     let cancelled = false;
     const url = `${ROUTES.api.playbackSign}?episodeId=${encodeURIComponent(episode.id)}`;
     fetch(url)
       .then(async (res) => {
-        if (!res.ok) throw new Error("No autorizado");
+        if (!res.ok) throw new Error("unavailable");
         const data = (await res.json()) as { url: string };
         if (!cancelled) setSrc(data.url);
       })
       .catch(() => {
-        if (!cancelled) setError("No se pudo cargar el video.");
+        if (!cancelled) {
+          setError("No se pudo cargar el video. Inténtalo más tarde.");
+        }
       });
 
     return () => {

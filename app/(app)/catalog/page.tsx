@@ -2,19 +2,22 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { UserRound } from "lucide-react";
 import { Wordmark } from "@/components/brand/Wordmark";
-import { FeaturedHero } from "@/components/catalog/FeaturedHero";
-import { GuidedPath } from "@/components/catalog/GuidedPath";
+import { KitShowcase } from "@/components/catalog/KitShowcase";
 import { SectionRow } from "@/components/catalog/SectionRow";
-import { ROUTES, SECTION_KIND } from "@/lib/constants";
+import { ACCESS_TYPE, ROUTES } from "@/lib/constants";
 import { getSectionsWithSeries } from "@/lib/data/catalog";
 
 export const metadata: Metadata = { title: "Catálogo" };
 
 export default async function CatalogPage() {
   const sections = await getSectionsWithSeries();
-  const guided = sections.filter((s) => s.kind === SECTION_KIND.guidedPath);
-  const topics = sections.filter((s) => s.kind === SECTION_KIND.topic);
-  const featured = guided[0]?.series[0] ?? topics[0]?.series[0] ?? null;
+
+  // El Kit (videos de pago) es el contenido real y prioritario.
+  const kitSection =
+    sections.find((s) =>
+      s.series.some((se) => se.accessType === ACCESS_TYPE.purchase),
+    ) ?? null;
+  const otherSections = sections.filter((s) => s !== kitSection);
 
   return (
     <main className="space-y-9 pb-28 pt-5">
@@ -29,15 +32,23 @@ export default async function CatalogPage() {
         </Link>
       </header>
 
-      {featured && <FeaturedHero series={featured} />}
+      {kitSection && <KitShowcase section={kitSection} />}
 
-      {guided.map((section) => (
-        <GuidedPath key={section.id} section={section} />
-      ))}
-
-      {topics.map((section) => (
-        <SectionRow key={section.id} section={section} />
-      ))}
+      {otherSections.length > 0 && (
+        <div className="space-y-9">
+          <div className="px-5">
+            <h2 className="font-display text-lg font-bold text-muted">
+              Próximamente
+            </h2>
+            <p className="mt-0.5 text-sm text-faint">
+              Más contenido en camino. Te avisaremos cuando esté disponible.
+            </p>
+          </div>
+          {otherSections.map((section) => (
+            <SectionRow key={section.id} section={section} />
+          ))}
+        </div>
+      )}
     </main>
   );
 }

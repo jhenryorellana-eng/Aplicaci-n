@@ -4,7 +4,7 @@
  * Los videos usan streams HLS públicos de prueba (horizontales): solo
  * sirven para validar la mecánica; el contenido real los reemplaza.
  */
-import { EPISODE_STATUS, SECTION_KIND, TIER } from "@/lib/constants";
+import { ACCESS_TYPE, EPISODE_STATUS, SECTION_KIND, TIER } from "@/lib/constants";
 import type { Episode, FeedClip, Section, Series } from "@/types/domain";
 
 // Streams HLS públicos de prueba.
@@ -58,6 +58,8 @@ export const seedSeries: Series[] = [
     coverUrl: poster("primeros-30-dias", 800, 1000),
     position: 1,
     requiredTier: TIER.free,
+    accessType: ACCESS_TYPE.free,
+    comingSoon: false,
     isPublished: true,
   },
   {
@@ -70,6 +72,8 @@ export const seedSeries: Series[] = [
     coverUrl: poster("documentos-y-estatus", 800, 1000),
     position: 2,
     requiredTier: TIER.premium,
+    accessType: ACCESS_TYPE.free,
+    comingSoon: false,
     isPublished: true,
   },
   {
@@ -82,6 +86,8 @@ export const seedSeries: Series[] = [
     coverUrl: poster("tu-primer-trabajo", 800, 1000),
     position: 3,
     requiredTier: TIER.premium,
+    accessType: ACCESS_TYPE.free,
+    comingSoon: false,
     isPublished: true,
   },
   // Vida diaria
@@ -95,6 +101,8 @@ export const seedSeries: Series[] = [
     coverUrl: poster("licencia-de-conducir", 800, 1000),
     position: 1,
     requiredTier: TIER.free,
+    accessType: ACCESS_TYPE.free,
+    comingSoon: false,
     isPublished: true,
   },
   {
@@ -107,6 +115,8 @@ export const seedSeries: Series[] = [
     coverUrl: poster("credito-desde-cero", 800, 1000),
     position: 2,
     requiredTier: TIER.premium,
+    accessType: ACCESS_TYPE.free,
+    comingSoon: false,
     isPublished: true,
   },
   // Dinero y negocio
@@ -120,6 +130,8 @@ export const seedSeries: Series[] = [
     coverUrl: poster("impuestos-basicos", 800, 1000),
     position: 1,
     requiredTier: TIER.premium,
+    accessType: ACCESS_TYPE.free,
+    comingSoon: false,
     isPublished: true,
   },
   {
@@ -131,6 +143,8 @@ export const seedSeries: Series[] = [
     coverUrl: poster("abre-tu-negocio", 800, 1000),
     position: 2,
     requiredTier: TIER.premium,
+    accessType: ACCESS_TYPE.free,
+    comingSoon: false,
     isPublished: true,
   },
 ];
@@ -186,6 +200,8 @@ const clip = (
   seriesId: series.id,
   seriesSlug: series.slug,
   seriesTitle: series.title,
+  sectionTitle:
+    seedSections.find((s) => s.id === series.sectionId)?.title ?? "",
   playbackId: null,
   videoUrl: null,
   posterUrl: poster(`clip-${id}`, 720, 1280),

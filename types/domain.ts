@@ -2,7 +2,12 @@
  * Modelos de dominio de la app (independientes de la base de datos).
  * Los tipos generados de Supabase (Fase 3) se mapean a estos.
  */
-import type { EpisodeStatus, SectionKind, Tier } from "@/lib/constants";
+import type {
+  AccessType,
+  EpisodeStatus,
+  SectionKind,
+  Tier,
+} from "@/lib/constants";
 
 export interface Section {
   id: string;
@@ -22,6 +27,9 @@ export interface Series {
   coverUrl: string | null;
   position: number;
   requiredTier: Tier;
+  accessType: AccessType;
+  /** Si está marcada como "Próximamente" (contenido aún no disponible). */
+  comingSoon: boolean;
   isPublished: boolean;
 }
 
@@ -48,6 +56,8 @@ export interface FeedClip {
   seriesId: string;
   seriesSlug: string;
   seriesTitle: string;
+  /** Nombre de la sección/categoría (para el chip del feed). */
+  sectionTitle: string;
   playbackId: string | null;
   /** URL de video directa (Supabase Storage o cualquier URL). */
   videoUrl: string | null;

@@ -1,24 +1,26 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Tema — dark cinematográfico con acento dorado (aspiración).
-   App dark-first (estilo TikTok/Netflix), no sigue el modo del
-   sistema: la experiencia de video se mantiene consistente.
+   Branding USA Latino Prime — azul marino profundo + dorado.
+   App dark-first, premium y con acento dorado de aspiración.
    ============================================================ */
 @theme {
-  --color-background: #0b0a0c;
-  --color-surface: #161419;
-  --color-surface-2: #211d27;
-  --color-foreground: #f7f6f4;
-  --color-muted: #9c99a6;
-  --color-faint: #6c6976;
-  --color-border: #2a2730;
-  --color-gold: #f4b740;
-  --color-gold-deep: #d9971f;
-  --color-danger: #ef5350;
+  --color-background: #060d1c;
+  --color-surface: #0e1830;
+  --color-surface-2: #182441;
+  --color-foreground: #f4f7fc;
+  --color-muted: #aeb9cf;
+  --color-faint: #7e89a3;
+  --color-border: #21314f;
+  --color-navy: #002855;
+  --color-gold: #e9ae4e;
+  --color-gold-soft: #f2bc5a;
+  --color-gold-light: #ffd98a;
+  --color-gold-deep: #cf9433;
+  --color-danger: #f0656a;
 
-  --font-display: var(--font-bricolage), ui-sans-serif, sans-serif;
-  --font-body: var(--font-manrope), ui-sans-serif, sans-serif;
+  --font-display: var(--font-jakarta), ui-sans-serif, sans-serif;
+  --font-body: var(--font-jakarta), ui-sans-serif, sans-serif;
 
   --radius-card: 1.25rem;
 }
@@ -28,13 +30,19 @@ html {
 }
 
 body {
-  /* Atmósfera: un halo dorado tenue arriba sobre el fondo oscuro. */
+  /* Atmósfera: base azul marino con halo dorado tenue arriba. */
   background-color: var(--color-background);
-  background-image: radial-gradient(
-    120% 80% at 50% -10%,
-    rgba(244, 183, 64, 0.12),
-    rgba(244, 183, 64, 0) 60%
-  );
+  background-image:
+    radial-gradient(
+      120% 75% at 50% -10%,
+      rgba(233, 174, 78, 0.1),
+      rgba(233, 174, 78, 0) 55%
+    ),
+    radial-gradient(
+      90% 60% at 50% 110%,
+      rgba(0, 40, 85, 0.55),
+      rgba(0, 40, 85, 0) 60%
+    );
   background-attachment: fixed;
 }
 
@@ -67,5 +75,44 @@ body {
   .reveal {
     animation: none;
     opacity: 1;
+  }
+}
+
+/* Transición suave de entrada al navegar entre pantallas. */
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: page-in 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Entrada de los avisos (toasts). */
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.toast-enter {
+  animation: toast-in 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter,
+  .toast-enter {
+    animation: none;
   }
 }
