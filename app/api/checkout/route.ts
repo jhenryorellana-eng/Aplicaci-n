@@ -51,7 +51,7 @@ export async function POST(request: Request) {
       },
     ],
     customer_email: user.email ?? undefined,
-    success_url: `${publicEnv.siteUrl}${returnTo}?compra=ok`,
+    success_url: `${publicEnv.siteUrl}${ROUTES.api.checkoutConfirm}?session_id={CHECKOUT_SESSION_ID}&next=${encodeURIComponent(returnTo)}`,
     cancel_url: `${publicEnv.siteUrl}${returnTo}?compra=cancel`,
     metadata: { user_id: user.id, product_id: product.id },
   });

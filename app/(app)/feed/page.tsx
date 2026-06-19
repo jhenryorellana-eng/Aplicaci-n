@@ -17,7 +17,9 @@ function shuffle<T>(items: T[]): T[] {
 }
 
 export default async function FeedPage() {
-  const clips = shuffle(await getFeedClips());
+  // Clips y sesión son independientes → en paralelo (evita una espera en cadena).
+  const [clipsRaw, user] = await Promise.all([getFeedClips(), getSessionUser()]);
+  const clips = shuffle(clipsRaw);
 
   if (clips.length === 0) {
     return (
@@ -27,7 +29,6 @@ export default async function FeedPage() {
     );
   }
 
-  const user = await getSessionUser();
   const { likeCounts, likedClipIds, commentCounts, savedSeriesIds } =
     await getFeedEngagement(
       clips.map((c) => c.id),

@@ -21,6 +21,7 @@ export const ROUTES = {
     playbackSign: "/api/playback/sign",
     muxWebhook: "/api/mux/webhook",
     checkout: "/api/checkout",
+    checkoutConfirm: "/api/checkout/confirm",
     stripeWebhook: "/api/stripe/webhook",
   },
 } as const;
