@@ -14,6 +14,8 @@ export interface Section {
   slug: string;
   title: string;
   description: string | null;
+  /** Portada de la sección (billboard). */
+  coverUrl: string | null;
   kind: SectionKind;
   position: number;
 }

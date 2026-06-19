@@ -25,6 +25,7 @@ export const seedSections: Section[] = [
     title: "La Ruta del Éxito",
     description:
       "El método de Henry, paso a paso. Síguelo en orden desde que llegas.",
+    coverUrl: null,
     kind: SECTION_KIND.guidedPath,
     position: 1,
   },
@@ -33,6 +34,7 @@ export const seedSections: Section[] = [
     slug: "vida-diaria",
     title: "Vida diaria en EE.UU.",
     description: "Lo esencial para moverte y vivir bien desde el día uno.",
+    coverUrl: null,
     kind: SECTION_KIND.topic,
     position: 2,
   },
@@ -41,6 +43,7 @@ export const seedSections: Section[] = [
     slug: "dinero-y-negocio",
     title: "Dinero y negocio",
     description: "Crédito, impuestos y cómo levantar tu propio negocio.",
+    coverUrl: null,
     kind: SECTION_KIND.topic,
     position: 3,
   },

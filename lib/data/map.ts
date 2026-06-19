@@ -19,6 +19,7 @@ export function mapSection(r: SectionRow): Section {
     slug: r.slug,
     title: r.title,
     description: r.description,
+    coverUrl: r.cover_url,
     kind: r.kind as SectionKind,
     position: r.position,
   };

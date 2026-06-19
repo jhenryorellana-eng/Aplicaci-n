@@ -12,6 +12,7 @@ import type { SectionWithSeries } from "@/types/domain";
 export function KitShowcase({ section }: { section: SectionWithSeries }) {
   const first = section.series[0];
   if (!first) return null;
+  const cover = section.coverUrl ?? first.coverUrl;
 
   return (
     <section className="reveal space-y-4">
@@ -21,9 +22,9 @@ export function KitShowcase({ section }: { section: SectionWithSeries }) {
           className="group relative block overflow-hidden rounded-3xl border border-gold/40"
         >
           <div className="relative aspect-[4/5] w-full sm:aspect-[16/8]">
-            {first.coverUrl && (
+            {cover && (
               <Image
-                src={first.coverUrl}
+                src={cover}
                 alt={section.title}
                 fill
                 priority

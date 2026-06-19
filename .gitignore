@@ -42,10 +42,11 @@ public/swe-worker-*.js
 # vercel
 .vercel
 
-# videos fuente (pesados; se suben a Supabase Storage, no a git)
+# videos/imágenes fuente (se suben a Supabase Storage, no a git)
 /Videos/
 /Videos 2/
 /Vides/
+/imagenes de catalago/
 *.mp4
 scripts/_*.mjs
 
