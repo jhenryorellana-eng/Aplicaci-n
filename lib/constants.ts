@@ -3,7 +3,7 @@
  * "mágicos" para no repetirlos por el código.
  */
 
-export const APP_NAME = "USA Latino Prime";
+export const APP_NAME = "Prime Academy";
 export const APP_DESCRIPTION =
   "Tu guía en video para hacer las cosas bien en Estados Unidos, paso a paso.";
 
