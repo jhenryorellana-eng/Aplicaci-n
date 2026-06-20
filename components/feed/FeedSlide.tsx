@@ -1,7 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight, ChevronUp, Pause, Volume2, VolumeX } from "lucide-react";
+import {
+  ChevronRight,
+  ChevronUp,
+  Lock,
+  Pause,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
 import { CommentButton } from "@/components/feed/CommentButton";
 import { LikeButton } from "@/components/feed/LikeButton";
 import { SaveButton } from "@/components/feed/SaveButton";
@@ -140,19 +147,20 @@ export function FeedSlide({
         </div>
       )}
 
-      {/* Información + CTA a la serie */}
+      {/* Información + CTA al Kit (palpita para destacar) */}
       <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/90 via-black/45 to-transparent px-5 pb-28 pt-20">
         {clip.caption && (
-          <p className="mb-3 max-w-[30ch] text-base font-semibold leading-snug text-white">
+          <p className="mb-4 max-w-[30ch] text-base font-semibold leading-snug text-white">
             {clip.caption}
           </p>
         )}
         <Link
           href={ROUTES.series(clip.seriesSlug)}
-          className="inline-flex items-center gap-1.5 rounded-full bg-gold/95 px-4 py-2 text-sm font-bold text-background transition-transform duration-200 active:scale-95"
+          className="cta-pulse inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-base font-extrabold text-background shadow-lg shadow-gold/30 active:scale-95"
         >
-          Ver la serie: {clip.seriesTitle}
-          <ChevronRight className="size-4" aria-hidden />
+          <Lock className="size-4" aria-hidden />
+          Desbloquear el Kit
+          <ChevronRight className="size-5" aria-hidden />
         </Link>
       </div>
     </section>
