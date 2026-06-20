@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ArrowRight, Play, Sparkles } from "lucide-react";
 import { HeroCarousel } from "@/components/landing/HeroCarousel";
+import { Wordmark } from "@/components/brand/Wordmark";
 import { EnterFeedButton } from "@/components/feed/EnterFeedButton";
-import { APP_NAME, ROUTES } from "@/lib/constants";
+import { ROUTES } from "@/lib/constants";
 
 export default function HomePage() {
   return (
@@ -11,19 +12,10 @@ export default function HomePage() {
 
       {/* Marca */}
       <header
-        className="reveal relative z-10 flex items-center gap-2.5"
+        className="reveal relative z-10"
         style={{ animationDelay: "0ms" }}
       >
-        <span className="grid size-7 place-items-center rounded-md bg-navy">
-          <svg viewBox="0 0 40 40" className="size-4" aria-hidden>
-            <rect x="4" y="22" width="9" height="14" rx="2.5" fill="#e9ae4e" />
-            <rect x="15.5" y="13" width="9" height="23" rx="2.5" fill="#f2bc5a" />
-            <rect x="27" y="5" width="9" height="31" rx="2.5" fill="#ffd98a" />
-          </svg>
-        </span>
-        <span className="font-display text-lg font-extrabold tracking-tight">
-          {APP_NAME}
-        </span>
+        <Wordmark className="h-9" />
       </header>
 
       {/* Contenido del héroe */}

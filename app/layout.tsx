@@ -20,6 +20,26 @@ export const metadata: Metadata = {
   },
   description: APP_DESCRIPTION,
   applicationName: APP_NAME,
+  openGraph: {
+    type: "website",
+    siteName: APP_NAME,
+    title: `${APP_NAME} — El camino al éxito en EE.UU.`,
+    description: APP_DESCRIPTION,
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: APP_NAME,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${APP_NAME} — El camino al éxito en EE.UU.`,
+    description: APP_DESCRIPTION,
+    images: ["/og.png"],
+  },
   icons: {
     icon: [
       { url: "/icon.svg", type: "image/svg+xml" },

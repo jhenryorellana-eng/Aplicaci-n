@@ -4,10 +4,9 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const SLIDES = [
-  { src: "/hero/1.png", position: "object-top" },
-  { src: "/hero/2.png", position: "object-center" },
-  { src: "/hero/3.png", position: "object-top" },
-  { src: "/hero/4.png", position: "object-center" },
+  { src: "/hero/1.jpg", position: "object-top" },
+  { src: "/hero/2.jpg", position: "object-center" },
+  { src: "/hero/3.jpg", position: "object-center" },
 ];
 
 const INTERVAL_MS = 5000;

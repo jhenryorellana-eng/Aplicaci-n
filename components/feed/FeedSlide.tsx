@@ -7,7 +7,8 @@ import { LikeButton } from "@/components/feed/LikeButton";
 import { SaveButton } from "@/components/feed/SaveButton";
 import { ShareButton } from "@/components/feed/ShareButton";
 import { HlsVideo } from "@/components/player/HlsVideo";
-import { APP_NAME, FEED, ROUTES } from "@/lib/constants";
+import { Wordmark } from "@/components/brand/Wordmark";
+import { FEED, ROUTES } from "@/lib/constants";
 import { muxPublicHlsUrl } from "@/lib/mux/playback";
 import { useFeedStore } from "@/lib/stores/feedStore";
 import type { FeedClip } from "@/types/domain";
@@ -71,15 +72,8 @@ export function FeedSlide({
         className="absolute left-4 z-20 flex flex-col items-start gap-2"
         style={{ top: "calc(env(safe-area-inset-top) + 1rem)" }}
       >
-        <div className="flex items-center gap-2 rounded-full bg-black/35 py-1 pl-1 pr-3 backdrop-blur">
-          <span className="grid size-7 place-items-center rounded-full bg-navy">
-            <svg viewBox="0 0 40 40" className="size-4" aria-hidden>
-              <rect x="4" y="22" width="9" height="14" rx="2.5" fill="#e9ae4e" />
-              <rect x="15.5" y="13" width="9" height="23" rx="2.5" fill="#f2bc5a" />
-              <rect x="27" y="5" width="9" height="31" rx="2.5" fill="#ffd98a" />
-            </svg>
-          </span>
-          <span className="text-sm font-bold text-white">{APP_NAME}</span>
+        <div className="flex items-center rounded-full bg-black/35 px-3 py-1.5 backdrop-blur">
+          <Wordmark className="h-5" />
         </div>
         {clip.sectionTitle && (
           <span className="rounded-full bg-gold/90 px-2.5 py-0.5 text-[0.62rem] font-bold uppercase tracking-wide text-background">
