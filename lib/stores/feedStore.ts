@@ -7,6 +7,7 @@ interface FeedState {
   muted: boolean;
   setActiveIndex: (index: number) => void;
   toggleMuted: () => void;
+  setMuted: (value: boolean) => void;
 }
 
 export const useFeedStore = create<FeedState>((set) => ({
@@ -14,4 +15,5 @@ export const useFeedStore = create<FeedState>((set) => ({
   muted: true,
   setActiveIndex: (index) => set({ activeIndex: index }),
   toggleMuted: () => set((state) => ({ muted: !state.muted })),
+  setMuted: (value) => set({ muted: value }),
 }));

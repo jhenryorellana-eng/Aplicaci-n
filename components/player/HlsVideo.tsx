@@ -20,6 +20,8 @@ type Props = {
   maxBufferLength?: number;
   className?: string;
   onEnded?: () => void;
+  /** Se llama si el autoplay CON sonido fue bloqueado (se reanuda en mute). */
+  onAutoplayBlocked?: () => void;
 };
 
 export type HlsVideoHandle = {
@@ -39,10 +41,15 @@ export const HlsVideo = forwardRef<HlsVideoHandle, Props>(function HlsVideo(
     maxBufferLength,
     className = "",
     onEnded,
+    onAutoplayBlocked,
   },
   ref,
 ) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const blockedCbRef = useRef(onAutoplayBlocked);
+  useEffect(() => {
+    blockedCbRef.current = onAutoplayBlocked;
+  });
 
   useImperativeHandle(ref, () => ({ el: () => videoRef.current }), []);
 
@@ -83,8 +90,14 @@ export const HlsVideo = forwardRef<HlsVideoHandle, Props>(function HlsVideo(
     if (!video || playing === undefined) return;
 
     if (playing) {
-      const p = video.play();
-      if (p) p.catch(() => {});
+      video.play().catch(() => {
+        // Autoplay con sonido bloqueado: reanuda en mute para no quedar pausado.
+        if (!video.muted) {
+          video.muted = true;
+          video.play().catch(() => {});
+          blockedCbRef.current?.();
+        }
+      });
     } else {
       video.pause();
     }

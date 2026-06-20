@@ -45,6 +45,7 @@ export function FeedSlide({
 }: Props) {
   const muted = useFeedStore((s) => s.muted);
   const toggleMuted = useFeedStore((s) => s.toggleMuted);
+  const setMuted = useFeedStore((s) => s.setMuted);
 
   const src = inWindow ? resolveSrc(clip) : null;
 
@@ -61,6 +62,7 @@ export function FeedSlide({
         loop
         playing={active}
         maxBufferLength={FEED.feedMaxBufferSeconds}
+        onAutoplayBlocked={() => setMuted(true)}
         className="absolute inset-0 size-full object-cover"
       />
 

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { EnterFeedButton } from "@/components/feed/EnterFeedButton";
 import { APP_NAME, ROUTES } from "@/lib/constants";
 
 export default function HomePage() {
@@ -69,13 +70,7 @@ export default function HomePage() {
             className="reveal mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
             style={{ animationDelay: "320ms" }}
           >
-            <Link
-              href={ROUTES.feed}
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-base font-bold text-background transition-transform duration-200 hover:scale-[1.03] active:scale-95"
-            >
-              <Play className="size-5 fill-background" />
-              Ver el feed
-            </Link>
+            <EnterFeedButton className="group inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-base font-bold text-background transition-transform duration-200 hover:scale-[1.03] active:scale-95" />
             <Link
               href={ROUTES.catalog}
               className="group inline-flex items-center justify-center gap-2 rounded-full border border-border bg-surface/60 px-7 py-3.5 text-base font-semibold text-foreground backdrop-blur transition-colors duration-200 hover:border-gold/60 hover:text-gold"
