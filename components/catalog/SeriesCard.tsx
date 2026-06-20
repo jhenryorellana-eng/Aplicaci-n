@@ -17,11 +17,7 @@ export function SeriesCard({ series, step, className = "" }: Props) {
   const { comingSoon } = series;
 
   const card = (
-    <div
-      className={`relative aspect-[4/5] overflow-hidden rounded-2xl border border-border/60 bg-surface ${
-        comingSoon ? "opacity-70" : ""
-      }`}
-    >
+    <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-border/60 bg-surface">
       {series.coverUrl && (
         <Image
           src={series.coverUrl}
@@ -29,7 +25,7 @@ export function SeriesCard({ series, step, className = "" }: Props) {
           fill
           sizes="(max-width: 640px) 45vw, 220px"
           className={`object-cover transition-transform duration-500 ${
-            comingSoon ? "grayscale" : "group-hover:scale-105"
+            comingSoon ? "" : "group-hover:scale-105"
           }`}
         />
       )}
@@ -47,7 +43,7 @@ export function SeriesCard({ series, step, className = "" }: Props) {
           Próximamente
         </span>
       ) : isPurchase ? (
-        <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-gold px-2 py-1 text-[0.62rem] font-bold uppercase tracking-wide text-background">
+        <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-brand-red px-2 py-1 text-[0.62rem] font-bold uppercase tracking-wide text-white">
           <Lock className="size-3" aria-hidden />
           De pago
         </span>

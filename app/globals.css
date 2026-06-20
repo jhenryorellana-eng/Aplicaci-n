@@ -17,6 +17,8 @@
   --color-gold-soft: #f2bc5a;
   --color-gold-light: #ffd98a;
   --color-gold-deep: #cf9433;
+  --color-brand-red: #e0202e;
+  --color-brand-red-deep: #b81522;
   --color-danger: #f0656a;
 
   --font-display: var(--font-jakarta), ui-sans-serif, sans-serif;
@@ -108,11 +110,11 @@ body {
 @keyframes cta-pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(233, 174, 78, 0.55);
+    box-shadow: 0 0 0 0 rgba(224, 32, 46, 0.6);
     transform: scale(1);
   }
   50% {
-    box-shadow: 0 0 24px 7px rgba(233, 174, 78, 0.5);
+    box-shadow: 0 0 24px 7px rgba(224, 32, 46, 0.55);
     transform: scale(1.045);
   }
 }

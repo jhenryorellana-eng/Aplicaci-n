@@ -101,7 +101,7 @@ export default async function SeriesPage({ params }: Params) {
             </span>
           )}
           {!comingSoon && isPurchase && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-gold px-2.5 py-1 text-[0.66rem] font-bold uppercase tracking-wide text-background">
+            <span className="inline-flex items-center gap-1 rounded-full bg-brand-red px-2.5 py-1 text-[0.66rem] font-bold uppercase tracking-wide text-white">
               <Lock className="size-3" aria-hidden />
               Video de pago
             </span>

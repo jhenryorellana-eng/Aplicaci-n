@@ -49,7 +49,7 @@ export function KitShowcase({ section }: { section: SectionWithSeries }) {
                 {section.description}
               </p>
             )}
-            <span className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-bold text-background transition-transform duration-200 group-hover:scale-[1.03]">
+            <span className="inline-flex items-center gap-2 rounded-full bg-brand-red px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-red/30 transition-transform duration-200 group-hover:scale-[1.03]">
               Ver el Kit
               <ArrowRight className="size-4" aria-hidden />
             </span>

@@ -156,7 +156,7 @@ export function FeedSlide({
         )}
         <Link
           href={ROUTES.series(clip.seriesSlug)}
-          className="cta-pulse inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3.5 text-base font-extrabold text-background shadow-lg shadow-gold/30 active:scale-95"
+          className="cta-pulse inline-flex items-center gap-2 rounded-full bg-brand-red px-6 py-3.5 text-base font-extrabold text-white shadow-lg shadow-brand-red/40 active:scale-95"
         >
           <Lock className="size-4" aria-hidden />
           Desbloquear el Kit
