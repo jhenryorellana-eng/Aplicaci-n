@@ -2,10 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
-  BadgeCheck,
+  Briefcase,
+  Car,
+  Compass,
+  CreditCard,
+  FileText,
+  HeartHandshake,
+  Landmark,
+  ListChecks,
   Languages,
   Play,
-  ScrollText,
+  Scale,
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
@@ -14,25 +21,36 @@ import { APP_NAME, ROUTES } from "@/lib/constants";
 
 const TRUST = [
   { icon: Languages, label: "100% en español" },
-  { icon: ScrollText, label: "Basado en audiencias reales" },
+  { icon: ListChecks, label: "Paso a paso" },
   { icon: ShieldCheck, label: "Respaldo de USA Latino Prime" },
 ];
 
-const BENEFITS = [
+// La propuesta total: todo lo que el inmigrante necesita hacer bien en EE.UU.
+const TOPICS = [
+  { icon: Compass, label: "Tus primeros 30 días" },
+  { icon: FileText, label: "Documentos y estatus" },
+  { icon: Car, label: "Licencia de conducir" },
+  { icon: CreditCard, label: "Crédito desde cero" },
+  { icon: Landmark, label: "Impuestos básicos" },
+  { icon: Briefcase, label: "Tu propio negocio (LLC)" },
+  { icon: Scale, label: "Preparación de asilo" },
+];
+
+const WHY = [
   {
-    icon: ScrollText,
-    title: "Entiende tu audiencia",
-    text: "Qué pasa en cada etapa: audiencia preliminar, reprogramada y de mérito. Sin sorpresas.",
+    icon: Languages,
+    title: "En español, sin enredos",
+    text: "Explicado claro y sencillo, para que de verdad entiendas qué hacer.",
   },
   {
-    icon: BadgeCheck,
-    title: "Responde con seguridad",
-    text: "Qué te preguntará el juez y cómo contestar con claridad, sin miedo y sin contradecirte.",
+    icon: ListChecks,
+    title: "El método, paso a paso",
+    text: "En orden, desde que llegas: qué hacer primero y qué evitar.",
   },
   {
-    icon: ShieldCheck,
-    title: "Nunca estás solo",
-    text: "Y si tu caso necesita más fuerza, el equipo de USA Latino Prime te acompaña paso a paso.",
+    icon: HeartHandshake,
+    title: "Nunca solo",
+    text: "Hazlo tú mismo con guía, y el respaldo de USA Latino Prime cuando lo necesites.",
   },
 ];
 
@@ -81,26 +99,27 @@ export default function HomePage() {
               style={{ animationDelay: "80ms" }}
             >
               <Sparkles className="size-3.5" aria-hidden />
-              Preparación para tu asilo
+              Tu guía en Estados Unidos
             </p>
 
             <h1
-              className="reveal font-display text-[clamp(2.4rem,9vw,4.6rem)] font-extrabold leading-[0.98] tracking-[-0.02em]"
+              className="reveal font-display text-[clamp(2.3rem,8.5vw,4.4rem)] font-extrabold leading-[0.99] tracking-[-0.02em]"
               style={{ animationDelay: "160ms" }}
             >
-              Llega{" "}
+              Haz las cosas{" "}
               <span className="bg-gradient-to-br from-gold to-gold-deep bg-clip-text text-transparent">
-                preparado
+                bien
               </span>{" "}
-              a tu audiencia.
+              en Estados Unidos.
             </h1>
 
             <p
-              className="reveal mt-5 max-w-[40ch] text-balance text-base leading-relaxed text-muted sm:text-lg"
+              className="reveal mt-5 max-w-[42ch] text-balance text-base leading-relaxed text-muted sm:text-lg"
               style={{ animationDelay: "240ms" }}
             >
-              Henry te explica, paso a paso y en español, qué esperar y cómo
-              responder ante el juez. Empieza viendo videos{" "}
+              Licencia, crédito, impuestos, tu propio negocio, tu caso de
+              asilo y más. Henry te enseña cómo, en español y paso a paso.
+              Empieza{" "}
               <span className="font-semibold text-foreground">gratis</span>.
             </p>
 
@@ -116,7 +135,7 @@ export default function HomePage() {
                 href={ROUTES.catalog}
                 className="group inline-flex items-center justify-center gap-2 rounded-full border border-border bg-surface/60 px-7 py-4 text-base font-semibold text-foreground backdrop-blur transition-colors duration-200 hover:border-gold/60 hover:text-gold"
               >
-                Conocer el kit
+                Ver los temas
                 <ArrowRight className="size-5 transition-transform duration-200 group-hover:translate-x-0.5" />
               </Link>
             </div>
@@ -146,19 +165,42 @@ export default function HomePage() {
         </ul>
       </section>
 
-      {/* ============ QUÉ VAS A LOGRAR ============ */}
+      {/* ============ TODO EN UN SOLO LUGAR (la propuesta total) ============ */}
       <section className="px-6 pt-14">
         <div className="reveal mx-auto max-w-xl text-center">
           <p className="text-[0.66rem] font-bold uppercase tracking-[0.22em] text-gold">
-            Por qué esta plataforma
+            Todo en un solo lugar
           </p>
           <h2 className="mt-2 font-display text-[clamp(1.7rem,6vw,2.4rem)] font-extrabold leading-tight tracking-tight">
-            Tu audiencia decide tu futuro. No la enfrentes a ciegas.
+            Tu vida en Estados Unidos, resuelta paso a paso.
           </h2>
+          <p className="mx-auto mt-3 max-w-[44ch] text-sm leading-relaxed text-muted">
+            Desde que llegas hasta que montas tu negocio: aquí aprendes a hacer
+            cada cosa legal, bien y sin perderte.
+          </p>
         </div>
 
-        <div className="mx-auto mt-9 grid max-w-xl gap-4 sm:grid-cols-3">
-          {BENEFITS.map(({ icon: Icon, title, text }, i) => (
+        <ul className="mx-auto mt-8 flex max-w-xl flex-wrap justify-center gap-2.5">
+          {TOPICS.map(({ icon: Icon, label }, i) => (
+            <li
+              key={label}
+              className="reveal flex items-center gap-2 rounded-full border border-border bg-surface/60 px-4 py-2.5 text-sm font-semibold"
+              style={{ animationDelay: `${i * 60}ms` }}
+            >
+              <Icon className="size-4 shrink-0 text-gold" aria-hidden />
+              {label}
+            </li>
+          ))}
+          <li className="reveal flex items-center gap-2 rounded-full border border-dashed border-gold/40 px-4 py-2.5 text-sm font-semibold text-gold">
+            + más cada semana
+          </li>
+        </ul>
+      </section>
+
+      {/* ============ POR QUÉ ============ */}
+      <section className="px-6 pt-14">
+        <div className="mx-auto grid max-w-xl gap-4 sm:grid-cols-3">
+          {WHY.map(({ icon: Icon, title, text }, i) => (
             <div
               key={title}
               className="reveal rounded-3xl border border-border bg-surface/50 p-5"
@@ -176,7 +218,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ============ EL KIT (PRODUCTO) ============ */}
+      {/* ============ DESTACADO DE HOY: EL KIT ============ */}
       <section className="px-6 pt-14">
         <div className="reveal relative mx-auto max-w-xl overflow-hidden rounded-[1.75rem] border border-gold/35 bg-gradient-to-b from-surface to-navy/40 p-7">
           <div
@@ -185,38 +227,24 @@ export default function HomePage() {
           />
           <div className="relative space-y-4">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[0.64rem] font-bold uppercase tracking-[0.14em] text-background">
-              <ShieldCheck className="size-3.5" aria-hidden />
-              Kit de preparación
+              <Sparkles className="size-3.5" aria-hidden />
+              Disponible ahora
             </span>
             <h2 className="font-display text-[clamp(1.6rem,5.5vw,2.2rem)] font-extrabold leading-tight tracking-tight">
-              Todo lo que necesitas para tu audiencia, en un solo lugar.
+              Kit de preparación para tu audiencia de asilo
             </h2>
-            <ul className="space-y-2.5">
-              {[
-                "Audiencia Preliminar",
-                "Audiencia Preliminar Reprogramada",
-                "Audiencia de Mérito",
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-center gap-2.5 text-sm font-medium text-foreground"
-                >
-                  <BadgeCheck className="size-4 shrink-0 text-gold" aria-hidden />
-                  {item}
-                </li>
-              ))}
-            </ul>
             <p className="text-sm leading-relaxed text-muted">
-              Llévate cada video por{" "}
+              ¿Tienes una audiencia cerca? Aprende qué esperar y cómo responder
+              ante el juez. Cada video por{" "}
               <span className="font-bold text-foreground">$8</span> — o el{" "}
-              <span className="font-bold text-gold">kit completo por $17</span> y
-              ahorra. Acceso de por vida.
+              <span className="font-bold text-gold">kit completo por $17</span>.
+              Acceso de por vida.
             </p>
             <Link
               href={ROUTES.catalog}
               className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gold px-6 py-3.5 font-bold text-background transition-transform hover:scale-[1.02] active:scale-95 sm:w-auto"
             >
-              Ver el kit completo
+              Ver el kit
               <ArrowRight className="size-5" aria-hidden />
             </Link>
           </div>
@@ -225,10 +253,10 @@ export default function HomePage() {
 
       {/* ============ CTA FINAL ============ */}
       <section className="reveal px-6 pt-14 text-center">
-        <h2 className="mx-auto max-w-[20ch] font-display text-[clamp(1.8rem,6vw,2.6rem)] font-extrabold leading-tight tracking-tight">
-          Tu mejor preparación empieza hoy.
+        <h2 className="mx-auto max-w-[22ch] font-display text-[clamp(1.8rem,6vw,2.6rem)] font-extrabold leading-tight tracking-tight">
+          Da el primer paso hacia tu nueva vida.
         </h2>
-        <p className="mx-auto mt-3 max-w-[38ch] text-sm leading-relaxed text-muted">
+        <p className="mx-auto mt-3 max-w-[40ch] text-sm leading-relaxed text-muted">
           Mira los primeros videos gratis. Sin compromiso.
         </p>
         <EnterFeedButton className="group mt-7 inline-flex items-center justify-center gap-2 rounded-full bg-gold px-8 py-4 text-base font-bold text-background shadow-lg shadow-gold/25 transition-transform duration-200 hover:scale-[1.03] active:scale-95">
