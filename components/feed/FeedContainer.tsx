@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FeedProgress } from "@/components/feed/FeedProgress";
 import { FeedSlide } from "@/components/feed/FeedSlide";
 import { FEED } from "@/lib/constants";
+import { orderFeedClips } from "@/lib/feed/order";
 import { useFeedStore } from "@/lib/stores/feedStore";
 import type { FeedClip } from "@/types/domain";
 
@@ -15,15 +16,6 @@ type Props = {
   savedSeriesIds: string[];
   isLoggedIn: boolean;
 };
-
-function shuffle<T>(items: T[]): T[] {
-  const a = [...items];
-  for (let i = a.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
 
 export function FeedContainer({
   clips,
@@ -48,19 +40,22 @@ export function FeedContainer({
     setActiveIndex(0);
   }, [setActiveIndex]);
 
-  // Feed infinito: al acercarse al final agrega un lote re-barajado,
-  // evitando que el mismo clip salga dos veces seguidas (en la unión).
+  // Feed infinito: al acercarse al final agrega un lote nuevo, sin repetir la
+  // misma serie en la unión entre lotes.
   useEffect(() => {
     if (baseCount < 1 || activeIndex < slides.length - 3) return;
     setSlides((prev) => {
-      const batch = shuffle(clips);
-      const lastId = prev[prev.length - 1]?.id;
-      if (batch.length > 1 && batch[0].id === lastId) {
-        [batch[0], batch[1]] = [batch[1], batch[0]];
-      }
-      return [...prev, ...batch];
+      const lastSeries = prev[prev.length - 1]?.seriesId;
+      return [...prev, ...orderFeedClips(clips, lastSeries)];
     });
   }, [activeIndex, slides.length, baseCount, clips]);
+
+  // Cuando el video activo termina, avanza solo al siguiente (autoplay continuo).
+  const goToNext = useCallback((index: number) => {
+    const root = containerRef.current;
+    if (!root) return;
+    root.scrollTo({ top: (index + 1) * root.clientHeight, behavior: "smooth" });
+  }, []);
 
   // Detecta el slide visible y lo marca como activo. Se re-suscribe cuando
   // crece la lista para observar los nuevos slides.
@@ -132,6 +127,7 @@ export function FeedContainer({
               commentCount={commentCounts[clip.id] ?? 0}
               initialSaved={savedSet.has(clip.seriesId)}
               isLoggedIn={isLoggedIn}
+              onEnded={goToNext}
             />
           );
         })}

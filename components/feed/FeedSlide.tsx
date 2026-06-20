@@ -24,6 +24,8 @@ type Props = {
   commentCount: number;
   initialSaved: boolean;
   isLoggedIn: boolean;
+  /** Al terminar el video activo, avanza al siguiente slide. */
+  onEnded?: (index: number) => void;
 };
 
 function resolveSrc(clip: FeedClip): string | null {
@@ -43,6 +45,7 @@ export function FeedSlide({
   commentCount,
   initialSaved,
   isLoggedIn,
+  onEnded,
 }: Props) {
   const muted = useFeedStore((s) => s.muted);
   const toggleMuted = useFeedStore((s) => s.toggleMuted);
@@ -60,10 +63,10 @@ export function FeedSlide({
         src={src}
         poster={clip.posterUrl}
         muted={muted}
-        loop
         playing={active}
         maxBufferLength={FEED.feedMaxBufferSeconds}
         onAutoplayBlocked={() => setMuted(true)}
+        onEnded={active ? () => onEnded?.(index) : undefined}
         className="absolute inset-0 size-full object-cover"
       />
 

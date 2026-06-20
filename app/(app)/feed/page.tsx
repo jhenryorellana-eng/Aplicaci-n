@@ -3,23 +3,16 @@ import { FeedContainer } from "@/components/feed/FeedContainer";
 import { getSessionUser } from "@/lib/auth/session";
 import { getFeedClips } from "@/lib/data/catalog";
 import { getFeedEngagement } from "@/lib/feed/likes";
+import { orderFeedClips } from "@/lib/feed/order";
 
 export const metadata: Metadata = { title: "Feed" };
 export const dynamic = "force-dynamic"; // orden aleatorio + likes por usuario
 
-function shuffle<T>(items: T[]): T[] {
-  const a = [...items];
-  for (let i = a.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
 export default async function FeedPage() {
   // Clips y sesión son independientes → en paralelo (evita una espera en cadena).
   const [clipsRaw, user] = await Promise.all([getFeedClips(), getSessionUser()]);
-  const clips = shuffle(clipsRaw);
+  // Orden al azar, sin dos clips seguidos de la misma serie.
+  const clips = orderFeedClips(clipsRaw);
 
   if (clips.length === 0) {
     return (
