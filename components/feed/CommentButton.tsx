@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { MessageCircle, Send, X } from "lucide-react";
 import { ROUTES } from "@/lib/constants";
 import { formatCount } from "@/lib/format";
@@ -159,14 +160,16 @@ export function CommentButton({ clipId, count, isLoggedIn }: Props) {
           {formatCount(total)}
         </span>
       </button>
-      {open && (
-        <CommentsSheet
-          clipId={clipId}
-          isLoggedIn={isLoggedIn}
-          onClose={() => setOpen(false)}
-          onAdded={() => setTotal((t) => t + 1)}
-        />
-      )}
+      {open &&
+        createPortal(
+          <CommentsSheet
+            clipId={clipId}
+            isLoggedIn={isLoggedIn}
+            onClose={() => setOpen(false)}
+            onAdded={() => setTotal((t) => t + 1)}
+          />,
+          document.body,
+        )}
     </>
   );
 }
